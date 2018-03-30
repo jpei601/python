@@ -21,6 +21,7 @@ def exampleGuessingGame():
     actualNumber = random.randint(0, upperBound)
 
     guessed = False
+    
 
     while not guessed:
         guessedNumber = int(input("guess a number: "))
