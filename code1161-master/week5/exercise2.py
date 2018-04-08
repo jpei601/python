@@ -86,32 +86,16 @@ def abba(source="abba", guard=3):
 
                    abba
                     to
-               bbaaobaobbba
+               bba aob aob bba
                     to
     aob aob bba bba oa aob bba oa aob aob aob bba
                 and so on...
     """
-    def apply_rules(letter, guard):
-        """Control the substitution.
-
-        You need to change these substitutions to make it work.
-
-        Hint: when guard == -1 return the letter.
-        """
-        if letter == "a":
-            return "bba"
-        elif letter == "b":
-            return "aob"
-        elif letter == "o":
-            return "oa"
-        else:
-            return letter
-
     str = ""
     for x in source:
-        str += apply_rules(x,guard)
+        str += apply_rule(x)
     guard -= 1
-    if ( guard == -1 ):
+    if ( guard == 0 ):
         return str
     else:
         return abba(str,guard)
@@ -170,7 +154,19 @@ def square_koch(t, order, size):
     """
     trace = ""
     # write the rest of the function here.
-    return str(order) + trace
+    if order == 0:  # The base case is just a straight line
+        t.forward( size )
+    else:
+        trace += square_koch( t, order - 1, size / 3 )  # Go 1/3 of the way
+        t.left( 90 )
+        trace += square_koch( t, order - 1, size / 3 )
+        t.right( 90 )
+        trace += square_koch( t, order - 1, size / 3 )
+        t.right( 90 )
+        trace += square_koch( t, order - 1, size / 3 )
+        t.left( 90 )
+        trace += square_koch( t, order - 1, size / 3 )
+    return str( order ) + trace
 
 
 
@@ -185,10 +181,11 @@ def draw_pointy(steps=4):
 
 
 if __name__ == '__main__':
+  #print( abba("baaab",2) )
   #  print(draw_koch(drawing_method=square_koch, steps_deep=2))
   #  print(draw_koch(drawing_method=square_koch, steps_deep=3))
-  #  print(draw_koch(drawing_method=square_koch, steps_deep=4))
-    print(draw_koch(drawing_method=koch, steps_deep=2))
+  print(draw_koch(drawing_method=square_koch, steps_deep=2))
+  #  print(draw_koch(drawing_method=koch, steps_deep=2))
   #  print("AB:", abba())
   #  print("ID:", str(italian_dinner()))
-    pass
+  pass
